@@ -10,9 +10,11 @@ SELECT * FROM account
 WHERE createdate < '2010-12-20 00:00:00';
 
 -- Q3 -- 
-SELECT * FROM account AS acc
-JOIN position AS pos
-ON acc.positionid = 1 AND pos.positionid = 1;
+SELECT a.AccountID, a.Email, a.Fullname, p.PositionName FROM account a
+JOIN position p 
+ON a.positionID = p.positionID
+WHERE PositionName = 'Dev';
+
 
 -- Q4 --
 SELECT dpm.departmentname ,dpm.departmentid, COUNT(acc.departmentid) AS count FROM account AS acc
@@ -110,6 +112,13 @@ ON gr.GroupID = ga.GroupID
 GROUP BY gr.GroupID
 HAVING soLuong = 0;
 
-
+-- Q16 --
+SELECT q.QuestionID, q.Content, COUNT(a.QuestionID) count
+FROM answer a
+RIGHT JOIN question q
+ON q.QuestionID = a.QuestionID
+GROUP BY q.QuestionID
+HAVING count = 0;
+ 
 
 
