@@ -58,7 +58,12 @@ GROUP BY s.Subject_ID
 HAVING count = 0;
 
 -- Q2 b --
-
+SELECT s.Subject_ID, s.Subject_Name, COUNT(ts.Subject_ID) AS count
+FROM trainee_subject ts
+RIGHT JOIN subject s
+ON ts.Subject_ID = s.Subject_ID
+GROUP BY s.Subject_ID
+HAVING count >= 2;
 
 -- Q3 -- 
 CREATE VIEW TraineeInfo AS 
@@ -68,6 +73,9 @@ JOIN subject s
 ON ts.Subject_ID = s.Subject_ID
 JOIN trainee t
 ON 	ts.Trainee_ID = t.Trainee_ID
+
+-- Q4 a--
+
 
 
 
