@@ -28,16 +28,18 @@ DELIMITER ;
 DELIMITER $$
 	CREATE PROCEDURE sp_thongKeQuestion ()
 		BEGIN
-			SELECT tq.typeID, tq.typename, COUNT(q.QuestionID) AS soLuong
-            FROM question q
-            JOIN typequestion tq
-            ON q.TypeID = tq.TypeID
-            GROUP BY q.TypeID
-            HAVING MONTH(q.CreateDate) = MONTH(curdate()) ;
-            
+			WITH cte_currentMonth AS (
+				SELECT tq.TypeID, tq.typename, q.QuestionID, q.Content, q.CreateDate FROM typequestion tq
+                JOIN question q
+                ON tq.TypeID = q.TypeID
+                WHERE MONTH(q.createDate) = MONTH(CURDATE()) AND YEAR(q.createDate) = YEAR(CURDATE())
+			)
+			SELECT tq.typeID, tq.typename, COUNT(q.QuestionID), q.CreateDate AS soLuong
+            FROM cte_currentMonth
+            GROUP BY q.QuestionID;
         END$$
 DELIMITER ;
-
+SELECT yearweek(curdate());
 -- Q4 --
 DROP PROCEDURE IF EXISTS sp_dangCauHoiNhieuNhat;
 DELIMITER $$
@@ -72,7 +74,7 @@ DELIMITER $$
             ALTER TABLE account
             MODIFY positionID smallint unsigned DEFAULT 1;
             UPDATE account
-            SET username = in_email, DepartmentID = NULL;
+            SET username = SUBSTRING_INDEX(in_email, '@', 1), DepartmentID = NULL;
             SELECT * FROM account;
 		END$$
 DELIMITER ;
@@ -115,5 +117,40 @@ DELIMITER ;
 CALL sp_xoaExam(22);
 
 -- Q10 --
+
+-- Q11 --
+DROP PROCEDURE IF EXISTS sp_xoaPhongBan;
+DELIMITER $$
+	CREATE PROCEDURE sp_xoaPhongBan(IN in_depName VARCHAR(20))
+		BEGIN
+			UPDATE account a
+            JOIN department d
+            ON a.departmentID = d.departmentID
+            SET a.departmentID = 0
+            WHERE d.departmentName = in_depName;
+            DELETE FROM department
+            WHERE departmentName = in_depName ;
+        END$$
+DELIMITER ;
+
+CALL sp_xoaPhongBan('Sale');
+
+-- Q12 --
+DROP PROCEDURE IF EXISTS sp_SLcauHoiDuocTaoTrongNam;
+DELIMITER $$
+	CREATE PROCEDURE sp_SLcauHoiDuocTaoTrongNam(IN in_year INT)
+		BEGIN 
+			WITH cte_month AS (
+				SELECT MONTH(createDate) AS Thang  FROM question
+				WHERE YEAR(createDate) = in_year
+			)
+			SELECT Thang, COUNT(Thang) AS SL FROM cte_month
+            GROUP BY Thang;
+		END$$
+DELIMITER ;
+
+CALL sp_SLcauHoiDuocTaoTrongNam(2021);
+
+-- Q13 --
 
 
