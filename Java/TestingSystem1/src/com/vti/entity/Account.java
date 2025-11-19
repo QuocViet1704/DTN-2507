@@ -1,19 +1,20 @@
-package JavaVTI;
+package com.vti.entity;
 
 import java.time.LocalDateTime;
 
 public class Account {
-	private int accountID;
-	private String email;
-	private String username;
-	private String fullname;
-	private Department department;
-	private Position position;
-	private LocalDateTime createDate;
+	public int id;
+	public String email;
+	public String username;
+	public String fullname;
+	public Department department;
+	public Position position;
+	public LocalDateTime createDate;
+	public Group[] groups;
 
-	public Account(int accountID, String email, String username, String fullname, Department department,
-			Position position, LocalDateTime createDate) {
-		this.accountID = accountID;
+	public Account(int id, String email, String username, String fullname, Department department, Position position,
+			LocalDateTime createDate) {
+		this.id = id;
 		this.email = email;
 		this.username = username;
 		this.fullname = fullname;
@@ -22,12 +23,12 @@ public class Account {
 		this.createDate = createDate;
 	}
 
-	public int getAccountID() {
-		return accountID;
+	public int getAccountid() {
+		return id;
 	}
 
-	public void setAccountID(int accountID) {
-		this.accountID = accountID;
+	public void setAccountid(int id) {
+		this.id = id;
 	}
 
 	public String getEmail() {
@@ -81,9 +82,9 @@ public class Account {
 	@Override
 	public String toString() {
 		return String.format(
-				"Account{ID = %d, Email = %s, Username = %s, Fullname = %s, "
-						+ "\n        DepartmentID = %s, PositionID = %s, Create Date = %s}",
-				accountID, email, username, fullname, department != null ? department.getDepartmentID() : "null",
+				"Account{id = %d, Email = %s, Username = %s, Fullname = %s, "
+						+ "\n        Departmentid = %s, Positionid = %s, Create Date = %s}",
+				id, email, username, fullname, department != null ? department.getDepartmentID() : "null",
 				position != null ? position.getPositionID() : "null", createDate);
 	}
 

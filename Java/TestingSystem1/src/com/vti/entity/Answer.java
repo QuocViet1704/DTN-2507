@@ -1,24 +1,24 @@
-package JavaVTI;
+package com.vti.entity;
 
 public class Answer {
-	private int answerID;
-	private String content;
-	private Question question;
-	private boolean isCorrect;
+	public int id;
+	public String content;
+	public Question question;
+	public boolean isCorrect;
 
-	public Answer(int answerID, String content, Question question, boolean isCorrect) {
-		this.answerID = answerID;
+	public Answer(int id, String content, Question question, boolean isCorrect) {
+		this.id = id;
 		this.content = content;
 		this.question = question;
 		this.isCorrect = isCorrect;
 	}
 
 	public int getAnswerID() {
-		return answerID;
+		return id;
 	}
 
-	public void setAnswerID(int answerID) {
-		this.answerID = answerID;
+	public void setAnswerID(int id) {
+		this.id = id;
 	}
 
 	public String getContent() {
@@ -47,7 +47,7 @@ public class Answer {
 
 	@Override
 	public String toString() {
-		return String.format("Answer{ID = %d, Content = %s, QuestionID = %d, Is Correct = %s}", answerID, content,
+		return String.format("Answer{ID = %d, Content = %s, QuestionID = %d, Is Correct = %s}", id, content,
 				question != null ? question.getQuestionID() : "null", isCorrect);
 	}
 }

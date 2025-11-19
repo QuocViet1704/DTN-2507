@@ -1,9 +1,9 @@
-package JavaVTI;
+package com.vti.entity;
 
 import java.time.LocalDateTime;
 
-import JavaVTI.Position.PositionName;
-import JavaVTI.TypeQuestion.TypeName;
+import com.vti.entity.Position.PositionName;
+import com.vti.entity.TypeQuestion.TypeName;
 
 public class Program {
 	public static void main(String[] args) {
@@ -21,6 +21,7 @@ public class Program {
 		Position pos4 = new Position(004, PositionName.TEST);
 
 //Account
+
 		Account acc1 = new Account(1001, "vietlee@gmail.com", "viet04", "Le Quoc Viet", dep5, pos4,
 				LocalDateTime.parse("2023-10-01T00:00:00"));
 		Account acc2 = new Account(1002, "trgngx@gmail.com", "truongngx04", "Nguyen Khac Truong", dep5, pos4,
@@ -33,15 +34,19 @@ public class Program {
 				LocalDateTime.parse("2024-10-01T00:00:00"));
 
 //Group 
-		Group grp1 = new Group(2001, "Junior", 111, LocalDateTime.parse("2019-10-01T00:00:00"));
-		Group grp2 = new Group(2002, "Senior", 112, LocalDateTime.parse("2020-11-14T00:00:00"));
-		Group grp3 = new Group(2003, "Master", 113, LocalDateTime.parse("2024-07-01T00:00:00"));
+		Group grp1 = new Group(2001, "Junior", acc1, LocalDateTime.parse("2019-10-01T00:00:00"));
+		Group grp2 = new Group(2002, "Senior", acc1, LocalDateTime.parse("2020-11-14T00:00:00"));
+		Group grp3 = new Group(2003, "Master", acc1, LocalDateTime.parse("2024-07-01T00:00:00"));
 
 //GroupAccount
-		GroupAccount ga1 = new GroupAccount(grp3, acc5, LocalDateTime.parse("2024-07-01T00:00:00"));
-		GroupAccount ga2 = new GroupAccount(grp1, acc3, LocalDateTime.parse("2020-04-04T00:00:00"));
-		GroupAccount ga3 = new GroupAccount(grp2, acc2, LocalDateTime.parse("2020-01-11T00:00:00"));
-		GroupAccount ga4 = new GroupAccount(grp2, acc1, LocalDateTime.parse("2023-08-01T00:00:00"));
+		Group[] group_account1 = { grp1, grp2 };
+		acc1.groups = group_account1;
+
+		Group[] group_account2 = { grp2 };
+		acc2.groups = group_account2;
+
+		Group[] group_account3 = { grp1, grp2, grp3 };
+		acc3.groups = group_account3;
 
 //TypeQuestion
 		TypeQuestion tques1 = new TypeQuestion(001, TypeName.ESSAY);
@@ -55,15 +60,15 @@ public class Program {
 		CategoryQuestion cques5 = new CategoryQuestion(105, "Ruby");
 
 //Question
-		Question ques1 = new Question(0101, "Câu hỏi về Database", cques5, tques2, 1,
+		Question ques1 = new Question(0101, "Câu hỏi về Database", cques5, tques2, acc1,
 				LocalDateTime.parse("2024-07-01T00:00:00"));
-		Question ques2 = new Question(0201, "Câu hỏi về Java", cques4, tques1, 2,
+		Question ques2 = new Question(0201, "Câu hỏi về Java", cques4, tques1, acc2,
 				LocalDateTime.parse("2023-07-21T00:00:00"));
-		Question ques3 = new Question(0301, "Câu hỏi về C++", cques1, tques1, 3,
+		Question ques3 = new Question(0301, "Câu hỏi về C++", cques1, tques1, acc2,
 				LocalDateTime.parse("2022-04-19T00:00:00"));
-		Question ques4 = new Question(0401, "Câu hỏi về Python", cques1, tques2, 4,
+		Question ques4 = new Question(0401, "Câu hỏi về Python", cques1, tques2, acc1,
 				LocalDateTime.parse("2020-07-01T00:00:00"));
-		Question ques5 = new Question(0501, "Câu hỏi về Ruby", cques2, tques2, 5,
+		Question ques5 = new Question(0501, "Câu hỏi về Ruby", cques2, tques2, acc5,
 				LocalDateTime.parse("2019-10-01T00:00:00"));
 
 //Answer
@@ -74,29 +79,36 @@ public class Program {
 		Answer ans5 = new Answer(05, "Câu trả lời cho Ruby", ques5, true);
 
 //Exam 
-		Exam exam1 = new Exam(1, "901", "Đề thi 01", cques2, 120, 01, LocalDateTime.parse("2019-10-01T00:00:00"));
-		Exam exam2 = new Exam(2, "902", "Đề thi 02", cques2, 90, 02, LocalDateTime.parse("2019-11-19T00:00:00"));
-		Exam exam3 = new Exam(3, "903", "Đề thi 03", cques1, 60, 03, LocalDateTime.parse("2023-10-01T00:00:00"));
-		Exam exam4 = new Exam(4, "904", "Đề thi 04", cques3, 30, 04, LocalDateTime.parse("2025-01-10T00:00:00"));
-		Exam exam5 = new Exam(5, "905", "Đề thi 05", cques5, 120, 05, LocalDateTime.parse("2020-10-01T00:00:00"));
+		Exam exam1 = new Exam(1, "901", "Đề thi 01", cques2, 120, acc3, LocalDateTime.parse("2019-10-01T00:00:00"));
+		Exam exam2 = new Exam(2, "902", "Đề thi 02", cques2, 90, acc4, LocalDateTime.parse("2019-11-19T00:00:00"));
+		Exam exam3 = new Exam(3, "903", "Đề thi 03", cques1, 60, acc4, LocalDateTime.parse("2023-10-01T00:00:00"));
+		Exam exam4 = new Exam(4, "904", "Đề thi 04", cques3, 30, acc2, LocalDateTime.parse("2025-01-10T00:00:00"));
+		Exam exam5 = new Exam(5, "905", "Đề thi 05", cques5, 120, acc3, LocalDateTime.parse("2020-10-01T00:00:00"));
 
 //ExamQuestion
-		ExamQuestion eques1 = new ExamQuestion(exam1, ques4);
-		ExamQuestion eques2 = new ExamQuestion(exam4, ques3);
-		ExamQuestion eques3 = new ExamQuestion(exam5, ques1);
-		ExamQuestion eques4 = new ExamQuestion(exam4, ques1);
-		ExamQuestion eques5 = new ExamQuestion(exam2, ques4);
+		Question[] exam_question1 = { ques1, ques2 };
+		exam1.questions = exam_question1;
 
-//		System.out.println(dep1);
-//		System.out.println(pos1);
-//		System.out.println(acc1);
-//		System.out.println(grp1);
-//		System.out.println(ga1);
+		Question[] exam_question2 = { ques1, ques2, ques3 };
+		exam2.questions = exam_question2;
+
+		Question[] exam_question3 = { ques1 };
+		exam3.questions = exam_question3;
+
+		Question[] exam_question4 = { ques1, ques2, ques5, ques4 };
+		exam4.questions = exam_question4;
+
+		Question[] exam_question5 = { ques1, ques5, ques4 };
+		exam5.questions = exam_question5;
+
+		System.out.println(dep1);
+		System.out.println(pos1);
+		System.out.println(acc1);
+		System.out.println(grp1);
 		System.out.println(tques1);
 		System.out.println(cques1);
 		System.out.println(ques1);
 		System.out.println(ans1);
 		System.out.println(exam1);
-		System.out.println(eques1);
 	}
 }
