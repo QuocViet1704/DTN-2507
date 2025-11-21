@@ -87,4 +87,32 @@ public class StaffManagement {
 			}
 		}
 	}
+
+	public void showInfo() {
+		System.out.println("Danh sách các cán bộ");
+		for (Staff staff : staffList) {
+			System.out.println("Tên: " + staff.getName());
+			System.out.println("Tuổi: " + staff.getAge());
+			System.out.println("Giới tính: " + staff.getGender());
+			System.out.println("Địa chỉ: " + staff.getAddress());
+
+			if (staff instanceof Employee) {
+				Employee employee = (Employee) staff;
+				System.out.println("Công việc: " + employee.getTask());
+			} else if (staff instanceof Engineer) {
+				Engineer engineer = (Engineer) staff;
+				System.out.println("Ngành đào tạo: " + engineer.getTraining());
+			} else if (staff instanceof Worker) {
+				Worker worker = (Worker) staff;
+				System.out.println("Cấp bậc: " + worker.getRank());
+			}
+		}
+	}
+
+	public void deleteByName() {
+		System.out.println("Nhập tên cán bộ muốn xóa: ");
+		String deleteName = sc.nextLine();
+		staffList.removeIf(s -> s.getName().equals(deleteName));
+	}
+
 }

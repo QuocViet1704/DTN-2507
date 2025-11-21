@@ -9,6 +9,7 @@ public class Program {
 		while (true) {
 			sm.addStaff();
 			sm.findByName();
+			sm.deleteByName();
 		}
 	}
 }
