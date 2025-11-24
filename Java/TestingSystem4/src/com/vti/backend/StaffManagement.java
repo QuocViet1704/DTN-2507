@@ -74,6 +74,7 @@ public class StaffManagement {
 	public void findByName() {
 		System.out.println("Nhập tên cán bộ muốn tìm: ");
 		String name = sc.nextLine();
+
 		if (staffList.isEmpty()) {
 			System.out.println("Không có cán bộ trong danh sách!!");
 		} else {
@@ -112,7 +113,11 @@ public class StaffManagement {
 	public void deleteByName() {
 		System.out.println("Nhập tên cán bộ muốn xóa: ");
 		String deleteName = sc.nextLine();
+
 		staffList.removeIf(s -> s.getName().equals(deleteName));
 	}
 
+	public void exitLoop() {
+
+	}
 }
