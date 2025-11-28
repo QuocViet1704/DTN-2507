@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.vti.utils.ScannerUtils;
+
 public class Account {
 	public int id;
 	public String email;
@@ -127,6 +129,18 @@ public class Account {
 
 	public static List<Account> getAllAccounts() {
 		return accounts;
+	}
+
+	public void inputAccountAge() throws InvalidAgeInputingException {
+		while (true) {
+			int age = ScannerUtils.inputInt("wrong inputing! Please input an int type, input again");
+			if (age <= 0) {
+				throw new InvalidAgeInputingException("The age must be greater than 0");
+			} else {
+				return;
+			}
+		}
+
 	}
 
 	@Override
